@@ -23,7 +23,9 @@ function displayStates(statesJson) {
 }
 
 function displayState(stateObj) {
-  const div1 = document.createElement('div')
+  div1 = document.createElement('div')
+  // div1.className = "container col s3"
+  div1.style = "width:400px; float:left"
   div1.innerHTML = displayStateCard(stateObj)
   document.querySelector("#app-container").appendChild(div1)
 }
@@ -31,17 +33,17 @@ function displayState(stateObj) {
 
 function displayStateCard(stateObj) {
   const card =
-  ` <div class="col s12 m6">
-    <div class="card blue-grey darken-1">
-      <div class="card-content white-text">
-        <span class="card-title">${stateObj.attributes.name}</span>
-        <p>I am a very simple card. I am good at containing small bits of information.
-        I am convenient because I require little markup to use effectively.</p>
+    `<div class="col s3 m3" style="width:300px">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">${stateObj.attributes.name}</span>
+          <p>I am a very simple card. I am good at containing small bits of information.
+          I am convenient because I require little markup to use effectively.</p>
+        </div>
+        <div class="card-action">
+          <p>County Breakdown!</p>
+        </div>
       </div>
-      <div class="card-action">
-        <p>County Breakdown!</p>
-      </div>
-    </div>
-  </div>`;
+    </div>`;
 return card
 }
