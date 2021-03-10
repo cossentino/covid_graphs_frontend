@@ -15,7 +15,9 @@ function getStates() {
 }
 function displayStates(statesJson) {
   document.querySelector('#app-container').innerHTML = ""
+  sortJSONObjArrayByName(statesJson)
   statesJson.data.forEach(s => displayState(s))
+  console.log(statesJson)
   return statesJson
 }
 function displayState(stateObj) {
@@ -82,4 +84,13 @@ function createCountyHTML(countyObj) {
       </div>
     </div>`;
 return card
+}
+
+
+// Sort JSON obj by name
+
+function sortJSONObjArrayByName(json) {
+  json.data.sort((a,b) => {
+    return a.attributes.name.localeCompare(b.attributes.name)
+  })
 }
