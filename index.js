@@ -34,6 +34,7 @@ function stateCardHTML(stateObj) {
           <span class="card-title">${stateObj.attributes.name}</span>
           <p>Total Cases: ${stateObj.attributes.total_cases}</p>
           <p>Population: ${stateObj.attributes.population}</p>
+          <p>Cases as Percent of Population: ${stateObj.attributes.case_rate}%</p>
         </div>
         <div class="card-action">
           <button class="show-state-detail" value=${stateObj.id}>County Breakdown!</button>
@@ -80,6 +81,7 @@ function countyCardHTML(countyObj) {
           <span class="card-title">${countyObj.attributes.name}</span>
           <p>Total Cases: ${countyObj.attributes.total_cases}</p>
           <p>Population: ${countyObj.attributes.population}</p>
+          <p>Cases as Percent of Population: ${countyObj.attributes.case_rate}%</p>
         </div>
       </div>
     </div>`;
