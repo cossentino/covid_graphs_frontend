@@ -5,6 +5,7 @@ console.log("test test")
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
+  addLinksToCountyButtons()
 })
 
 
@@ -52,17 +53,22 @@ return card
 
 // Display detail view of county-by-county breakdown
 
-function getCounties() {
-  fetch(statesEndpoint)
+function getCountiesByState() {
+  fetch(countiesEndpoint)
     .then( resp => resp.json() )
-    .then( json => displayStates(json) )
+    .then( json => console.log(json) )
 }
 
- const detailLinks = document.querySelectorAll('.show-state-detail')
 
-for (i of detailLinks ) {
-  i.addEventListener('click', () => showCountyView)
+function addLinkToCountyButtons() {
+  const detailLinks = document.querySelectorAll('.show-state-detail')
+  for (i of detailLinks ) {
+    i.addEventListener('click', () => {
+      getCountiesByState()
+    })
+  }
 }
 
-function showCountyView() {
+function showCountyView(json) {
   const stateName = e.target.parentElement.previousElementSibling.querySelector('.card-title').innerHTML
+}
