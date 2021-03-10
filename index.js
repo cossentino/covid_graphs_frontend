@@ -79,17 +79,7 @@ function createCountyHTML(countyObj) {
           <p>Total Cases: ${countyObj.attributes.total_cases}</p>
           <p>Population: ${countyObj.attributes.population}</p>
         </div>
-        <div class="card-action">
-          <button class="show-county-detail" value=${countyObj.id}>County Breakdown!</button>
-        </div>
       </div>
     </div>`;
 return card
 }
-
-
-// Show/hide state view / county view
-
-  function toggleDisplay(elem) {
-    elem.style.visibility = "visible" ? elem.style.visibility = "hidden" : elem.style.visibility = "visible"
-  }
