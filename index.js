@@ -10,24 +10,23 @@ document.addEventListener("DOMContentLoaded", () => {
 function getStates() {
   fetch(statesEndpoint)
     .then( resp => resp.json() )
-    .then( json => displayStates(json) )
+    .then( json => displayStatesView(json) )
     .then( () => addLinkToCountyButtons() )
 }
-function displayStates(statesJson) {
+function displayStatesView(statesJson) {
   document.querySelector('#app-container').innerHTML = ""
   sortJSONObjArrayByName(statesJson)
-  statesJson.data.forEach(s => displayState(s))
-  console.log(statesJson)
+  statesJson.data.forEach(s => displayStateCard(s))
   return statesJson
 }
-function displayState(stateObj) {
+function displayStateCard(stateObj) {
   div1 = document.createElement('div')
   // div1.className = "container col s3"
   div1.style = "width:400px; float:left"
-  div1.innerHTML = displayStateCard(stateObj)
+  div1.innerHTML = stateCardHTML(stateObj)
   document.querySelector("#app-container").appendChild(div1)
 }
-function displayStateCard(stateObj) {
+function stateCardHTML(stateObj) {
   const card =
     `<div class="col s3 m3" style="width:300px">
       <div class="card blue-grey darken-1">
@@ -61,18 +60,19 @@ function getCountiesByState(e) {
 }
 function displayCountyView(json) {
   document.querySelector('#app-container').innerHTML = ""
+  sortJSONObjArrayByName(json)
   json.data.forEach( countyObj => {
-    createCountyCard(countyObj)
+    displayCountyCard(countyObj)
   })
 }
-function createCountyCard(countyObj) {
+function displayCountyCard(countyObj) {
   div1 = document.createElement('div')
   // div1.className = "container col s3"
   div1.style = "width:400px; float:left"
-  div1.innerHTML = createCountyHTML(countyObj)
+  div1.innerHTML = countyCardHTML(countyObj)
   document.querySelector("#app-container").appendChild(div1)
 }
-function createCountyHTML(countyObj) {
+function countyCardHTML(countyObj) {
   const card =
     `<div class="col s3 m3" style="width:300px">
       <div class="card blue-grey darken-1">
