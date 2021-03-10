@@ -1,27 +1,22 @@
 const statesEndpoint = "http://localhost:3000/api/v1/states"
 const countiesEndpoint = "http://localhost:3000/api/v1/counties"
-console.log("test test")
 
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
-  addLinksToCountyButtons()
 })
-
-
-
-
-
 
 // Functions to display a state on the homepage
 function getStates() {
   fetch(statesEndpoint)
     .then( resp => resp.json() )
     .then( json => displayStates(json) )
+    .then( () => addLinkToCountyButtons() )
 }
 
 function displayStates(statesJson) {
   statesJson.data.forEach(s => displayState(s))
+  return statesJson
 }
 
 function displayState(stateObj) {
@@ -43,7 +38,7 @@ function displayStateCard(stateObj) {
           <p>Population: ${stateObj.attributes.population}</p>
         </div>
         <div class="card-action">
-          <p class="show-state-detail">County Breakdown!</p>
+          <button class="show-state-detail" value=${stateObj.id}>County Breakdown!</button>
         </div>
       </div>
     </div>`;
@@ -53,22 +48,43 @@ return card
 
 // Display detail view of county-by-county breakdown
 
-function getCountiesByState() {
-  fetch(countiesEndpoint)
+function getCountiesByState(e) {
+  fetch(`http://localhost:3000/api/v1/states/${e.target.value}/counties`)
     .then( resp => resp.json() )
-    .then( json => console.log(json) )
+    .then( json => showCountyView(e, json) )
 }
 
 
 function addLinkToCountyButtons() {
   const detailLinks = document.querySelectorAll('.show-state-detail')
   for (i of detailLinks ) {
-    i.addEventListener('click', () => {
-      getCountiesByState()
+    i.addEventListener('click', e => {
+      getCountiesByState(e)
     })
   }
 }
 
-function showCountyView(json) {
+function showCountyView(e, json) {
   const stateName = e.target.parentElement.previousElementSibling.querySelector('.card-title').innerHTML
+  const countiesArray = []
+  json.data.forEach( countyObj => {
+    displayCountyCard(countyObj)
+  })
+}
+
+function displayCountyCard(countyObj) {
+  const card =
+    `<div class="col s3 m3" style="width:300px">
+      <div class="card blue-grey darken-1">
+        <div class="card-content white-text">
+          <span class="card-title">${stateObj.attributes.name}</span>
+          <p>Total Cases: ${stateObj.attributes.total_cases}</p>
+          <p>Population: ${stateObj.attributes.population}</p>
+        </div>
+        <div class="card-action">
+          <button class="show-state-detail" value=${stateObj.id}>County Breakdown!</button>
+        </div>
+      </div>
+    </div>`;
+return card
 }
