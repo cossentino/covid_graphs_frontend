@@ -111,27 +111,25 @@ function displayNewDataForm() {
       myDiv.innerHTML = `
       <form id="add-state-data-form">
         <div class="form-group">
+        <label for="state-select"><p class="#">State</p></label>
           <select id="state-select" style="display:inline-block">
             ${resp}
           </select>
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1"><p class="site-title">Title</p></label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="case-input"><p class="#">Cases</p></label>
+          <input type="text" class="form-control" id="case-input">
         </div>
         <div class="form-group">
-          <label for="exampleInputEmail1">Image Url</label>
-          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
-          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+          <label for="date-input">Date</label>
+          <input type="date" class="form-control" id="date-input">
         </div>
-        <div class="form-group">
-          <label for="exampleInputPassword1">Description</label>
-          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
-        </div>
-        <button type="submit" class="btn btn-primary">Submit</button>
+        <button type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
     </form>
       `
+    })
+    .then(() => {
+      document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
     })
 }
 
@@ -152,5 +150,13 @@ async function createStateSelectOptions() {
 }
 
 
- 
-  
+function submitHandler(e) {
+  e.preventDefault()
+  const stateID = document.querySelector('#state-select').value
+  const caseNumber = document.querySelector('#case-input').value
+  const date = document.querySelector('#date-input').value
+  postFetch(stateID, caseNumber, date)
+}
+
+
+function postFetch(stateID, caseNumber, date)
