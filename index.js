@@ -4,6 +4,7 @@ const countiesEndpoint = "http://localhost:3000/api/v1/counties"
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
+  document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
 })
 
 // Functions to display a state on the homepage
@@ -43,6 +44,8 @@ function stateCardHTML(stateObj) {
     </div>`;
 return card
 }
+
+
 
 // Display detail view of county-by-county breakdown
 
@@ -95,4 +98,59 @@ function sortJSONObjArrayByName(json) {
   json.data.sort((a,b) => {
     return a.attributes.name.localeCompare(b.attributes.name)
   })
+  return json
 }
+
+
+// Display Form to add data
+
+function displayNewDataForm() {
+  myDiv = document.querySelector('#app-container')
+  createStateSelectOptions()
+    .then(resp => { 
+      myDiv.innerHTML = `
+      <form id="add-state-data-form">
+        <div class="form-group">
+          <select id="state-select" style="display:inline-block">
+            ${resp}
+          </select>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1"><p class="site-title">Title</p></label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputEmail1">Image Url</label>
+          <input type="email" class="form-control" id="exampleInputEmail1" aria-describedby="emailHelp">
+          <small id="emailHelp" class="form-text text-muted">We'll never share your email with anyone else.</small>
+        </div>
+        <div class="form-group">
+          <label for="exampleInputPassword1">Description</label>
+          <textarea class="form-control" id="exampleFormControlTextarea1" rows="3"></textarea>
+        </div>
+        <button type="submit" class="btn btn-primary">Submit</button>
+    </form>
+      `
+    })
+}
+
+
+async function createStateSelectOptions() {
+  const stateOptions = []
+  const states = await( 
+    fetch(statesEndpoint)
+    .then( resp => resp.json() )
+    .then( json => sortJSONObjArrayByName(json))
+  )
+  for ( state of states.data ) {
+    stateOptions.push(
+      `<option value='${state.id}'>${state.attributes.name}<option>`
+    )
+  }
+  return stateOptions.join("\n")
+}
+
+
+ 
+  
