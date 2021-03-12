@@ -53,14 +53,11 @@ function getCountiesByState(e) {
 // Display cases over time
 
 function getStateGraph(e) {
-  fetch(`http://localhost:3000/api/v1/states/${e.target.value}/state_days`)
-    .then( resp => resp.json() )
-    .then( json => console.log(json))
+  const myState = State.all.find(el => el.id == e.target.value)
+  myState.displayGraphView()
 }
 
-function displayGraphView() {
-  "#"
-}
+
 
 
 

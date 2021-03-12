@@ -23,6 +23,7 @@ class State {
     this.population = stateObj.attributes.population
     this.case_rate = stateObj.attributes.case_rate
     this.counties = stateObj.attributes.counties
+    this.state_days = stateObj.attributes.state_days
     State.all.push(this)
   }
   
@@ -59,6 +60,44 @@ class State {
       </div>`;
   }
 
+
+  // Graph view
+
+
+    displayGraphView() {
+    const labels = 
+    document.querySelector('#app-container').innerHTML = ""
+    const canvas = document.createElement('canvas')
+    canvas.id = 'myChart'
+    var ctx = canvas.getContext('2d');
+    var chart = new Chart(ctx, {
+        // The type of chart we want to create
+        type: 'line',
+    
+        // The data for our dataset
+        data: {
+            labels: [...this.labels],
+            datasets: [{
+                label: `Cases of COVID-19 in ${this.name}`,
+                backgroundColor: 'rgb(255, 99, 132)',
+                borderColor: 'rgb(255, 99, 132)',
+                data: [...this.dailyCases]
+            }]
+        },
+        options: {}
+    });
+    document.querySelector('#app-container').appendChild(canvas)
+  }
+
+
+
+  get labels() {
+    return this.state_days.map(day => day.date)
+  }
+
+  get dailyCases() {
+    return this.state_days.map(day => day.cases)
+  }
 
 }
 
