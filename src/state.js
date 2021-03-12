@@ -65,38 +65,44 @@ class State {
 
 
     displayGraphView() {
-    const labels = 
-    document.querySelector('#app-container').innerHTML = ""
+      document.querySelector('#app-container').innerHTML = ""
+      this.createGraph()
+    }
+
+    get labels() {
+      return this.state_days.map(day => day.date)
+    }
+  
+    get dailyCases() {
+      return this.state_days.map(day => day.cases)
+    }
+
+    
+    createGraph() {
     const canvas = document.createElement('canvas')
     canvas.id = 'myChart'
-    var ctx = canvas.getContext('2d');
-    var chart = new Chart(ctx, {
-        // The type of chart we want to create
-        type: 'line',
-    
-        // The data for our dataset
+    var ctx = canvas.getContext('2d')
+    var chart = new Chart(ctx, 
+      {
+        type: 'bar',
         data: {
             labels: [...this.labels],
             datasets: [{
-                label: `Cases of COVID-19 in ${this.name}`,
+                label: '',
                 backgroundColor: 'rgb(255, 99, 132)',
                 borderColor: 'rgb(255, 99, 132)',
-                data: [...this.dailyCases]
+                data: [...this.dailyCases],
             }]
         },
-        options: {}
-    });
+        options: {
+          title: {
+            display: true,
+            text: `Cases of COVID-19 in ${this.name}`,
+            fontSize: 24
+          }
+        }
+    })
     document.querySelector('#app-container').appendChild(canvas)
-  }
-
-
-
-  get labels() {
-    return this.state_days.map(day => day.date)
-  }
-
-  get dailyCases() {
-    return this.state_days.map(day => day.cases)
   }
 
 }
