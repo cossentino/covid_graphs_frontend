@@ -3,13 +3,28 @@
 
 class State {
 
+  static sortStates() {
+    myStates = [...State.all]
+    myStates.sort((a,b) => {
+      return a.name.localeCompare(b.name)
+    })
+    return myStates
+  }
+
+  static displayStatesView() {
+    document.querySelector('#app-container').innerHTML = ""
+    this.sortStates().forEach(s => s.renderStateCard())
+  }
+
 
   constructor(stateObj) {
     this.id = stateObj.id
+    this.name = stateObj.attributes.name
     this.total_cases = stateObj.attributes.total_cases
     this.population = stateObj.attributes.population
     this.case_rate = stateObj.attributes.case_rate
     this.counties = stateObj.attributes.counties
+    State.all.push(this)
   }
 
 
@@ -39,3 +54,6 @@ class State {
   }
 
 }
+
+
+State.all = []
