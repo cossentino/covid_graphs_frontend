@@ -14,12 +14,14 @@ function getStates() {
     .then( json => displayStatesView(json) )
     .then( () => addLinkToCountyButtons() )
 }
+
 function displayStatesView(statesJson) {
   document.querySelector('#app-container').innerHTML = ""
   sortJSONObjArrayByName(statesJson)
   statesJson.data.forEach(s => displayStateCard(s))
   return statesJson
 }
+
 function displayStateCard(stateObj) {
   div1 = document.createElement('div')
   // div1.className = "container col s3"
@@ -27,6 +29,7 @@ function displayStateCard(stateObj) {
   div1.innerHTML = stateCardHTML(stateObj)
   document.querySelector("#app-container").appendChild(div1)
 }
+
 function stateCardHTML(stateObj) {
   const card =
     `<div class="col s3 m3" style="width:300px">
@@ -38,7 +41,7 @@ function stateCardHTML(stateObj) {
           <p>Cases as Percent of Population: ${stateObj.attributes.case_rate}%</p>
         </div>
         <div class="card-action">
-          <button class="show-state-detail" value=${stateObj.id}>County Breakdown!</button>
+          <button class="show-state-detail btn" value=${stateObj.id}>County Breakdown!</button>
         </div>
       </div>
     </div>`;
@@ -62,6 +65,7 @@ function getCountiesByState(e) {
     .then( resp => resp.json() )
     .then( json => displayCountyView(json) )
 }
+
 function displayCountyView(json) {
   document.querySelector('#app-container').innerHTML = ""
   sortJSONObjArrayByName(json)
@@ -69,6 +73,7 @@ function displayCountyView(json) {
     displayCountyCard(countyObj)
   })
 }
+
 function displayCountyCard(countyObj) {
   div1 = document.createElement('div')
   // div1.className = "container col s3"
@@ -76,6 +81,7 @@ function displayCountyCard(countyObj) {
   div1.innerHTML = countyCardHTML(countyObj)
   document.querySelector("#app-container").appendChild(div1)
 }
+
 function countyCardHTML(countyObj) {
   const card =
     `<div class="col s3 m3" style="width:300px">
@@ -124,7 +130,7 @@ function displayNewDataForm() {
           <label for="date-input">Date</label>
           <input type="date" class="form-control" id="date-input">
         </div>
-        <button type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
+        <button class="btn" type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
     </form>
       `
     })
@@ -132,7 +138,6 @@ function displayNewDataForm() {
       document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
     })
 }
-
 
 async function createStateSelectOptions() {
   const stateOptions = []
@@ -152,11 +157,22 @@ async function createStateSelectOptions() {
 
 function submitHandler(e) {
   e.preventDefault()
-  const stateID = document.querySelector('#state-select').value
+  const stateID = parseInt(document.querySelector('#state-select').value)
   const caseNumber = document.querySelector('#case-input').value
   const date = document.querySelector('#date-input').value
   postFetch(stateID, caseNumber, date)
 }
 
 
-function postFetch(stateID, caseNumber, date)
+function postFetch(stateID, caseNumber, date) {
+  const endpoint = `http://localhost:3000/api/v1/states/${stateID}/state_days`
+  const bodyData = { state_id: stateID, cases: caseNumber, date: date }
+  fetch(endpoint, {
+    // POST request
+    method: "POST",
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(bodyData)
+  })
+    .then(resp => resp.json())
+    .then(json => console.log(json))
+}
