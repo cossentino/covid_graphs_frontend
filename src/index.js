@@ -21,8 +21,6 @@ function getStates() {
     .then( () => State.displayStatesView() )
 }
 
-// Display detail view of county-by-county breakdown
-
 function addLinkToCountyButtons() {
   const detailLinks = document.querySelectorAll('.show-state-detail')
   for (i of detailLinks ) {
@@ -31,6 +29,9 @@ function addLinkToCountyButtons() {
     })
   }
 }
+
+// Display detail view of county-by-county breakdown
+
 function getCountiesByState(e) {
   fetch(`http://localhost:3000/api/v1/states/${e.target.value}/counties`)
     .then( resp => resp.json() )
@@ -42,49 +43,6 @@ function getCountiesByState(e) {
     })
     .then( () => County.displayCountiesView() )
 }
-
-function displayCountyView(json) {
-  document.querySelector('#app-container').innerHTML = ""
-  County.all.length = 0
-  sortJSONObjArrayByName(json)
-  json.data.forEach( countyObj => {
-    displayCountyCard(countyObj)
-  })
-}
-
-function displayCountyCard(countyObj) {
-  div1 = document.createElement('div')
-  // div1.className = "container col s3"
-  div1.style = "width:400px; float:left"
-  div1.innerHTML = countyCardHTML(countyObj)
-  document.querySelector("#app-container").appendChild(div1)
-}
-
-function countyCardHTML(countyObj) {
-  const card =
-    `<div class="col s3 m3" style="width:300px">
-      <div class="card blue-grey darken-1">
-        <div class="card-content white-text">
-          <span class="card-title">${countyObj.attributes.name}</span>
-          <p>Total Cases: ${countyObj.attributes.total_cases}</p>
-          <p>Population: ${countyObj.attributes.population}</p>
-          <p>Cases as Percent of Population: ${countyObj.attributes.case_rate}%</p>
-        </div>
-      </div>
-    </div>`;
-return card
-}
-
-
-// Sort JSON obj by name
-
-function sortJSONObjArrayByName(json) {
-  json.data.sort((a,b) => {
-    return a.attributes.name.localeCompare(b.attributes.name)
-  })
-  return json
-}
-
 
 // Display Form to add data
 

@@ -38,10 +38,10 @@ class County {
       <div class="col s3 m3" style="width:300px">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
-            <span class="card-title">${countyObj.attributes.name}</span>
-            <p>Total Cases: ${countyObj.attributes.total_cases}</p>
-            <p>Population: ${countyObj.attributes.population}</p>
-            <p>Cases as Percent of Population: ${countyObj.attributes.case_rate}%</p>
+            <span class="card-title">${this.name}</span>
+            <p>Total Cases: ${this.total_cases}</p>
+            <p>Population: ${this.population}</p>
+            <p>Cases as Percent of Population: ${this.case_rate}%</p>
           </div>
         </div>
       </div>`;
