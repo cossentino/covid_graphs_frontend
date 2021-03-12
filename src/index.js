@@ -47,44 +47,40 @@ function getCountiesByState(e) {
 // Display Form to add data
 
 function displayNewDataForm() {
-  myDiv = document.querySelector('#app-container')
-  createStateSelectOptions()
-    .then(resp => { 
-      myDiv.innerHTML = `
-      <form id="add-state-data-form">
-        <div class="form-group">
-        <label for="state-select"><p class="#">State</p></label>
-          <select id="state-select" style="display:inline-block">
-            ${resp}
-          </select>
-        </div>
-        <div class="form-group">
-          <label for="case-input"><p class="#">Cases</p></label>
-          <input type="text" class="form-control" id="case-input">
-        </div>
-        <div class="form-group">
-          <label for="date-input">Date</label>
-          <input type="date" class="form-control" id="date-input">
-        </div>
-        <button class="btn" type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
-    </form>
-      `
-    })
-    .then(() => {
-      document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
-    })
+  const myDiv = document.querySelector('#app-container')
+  myDiv.innerHTML = `
+  <form id="add-state-data-form">
+    <div class="form-group">
+    <label for="state-select"><p class="#">State</p></label>
+      <select id="state-select" style="display:inline-block">
+        ${createStateSelectOptions()}
+      </select>
+    </div>
+    <div class="form-group">
+      <label for="case-input"><p class="#">Cases</p></label>
+      <input type="text" class="form-control" id="case-input">
+    </div>
+    <div class="form-group">
+      <label for="date-input">Date</label>
+      <input type="date" class="form-control" id="date-input">
+    </div>
+    <button class="btn" type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
+</form>`
+  document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
 }
 
-async function createStateSelectOptions() {
+function createStateSelectOptions() {
   const stateOptions = []
-  const states = await( 
-    fetch(statesEndpoint)
-    .then( resp => resp.json() )
-    .then( json => sortJSONObjArrayByName(json))
-  )
-  for ( state of states.data ) {
+  // const states = await( 
+  //   fetch(statesEndpoint)
+  //   .then( resp => resp.json() )
+  //   .then( json => sortJSONObjArrayByName(json))
+  // )
+  const states = State.sortStates()
+  // for ( state of states.data ) {
+  for ( state of states ) {
     stateOptions.push(
-      `<option value='${state.id}'>${state.attributes.name}<option>`
+      `<option value='${state.id}'>${state.name}<option>`
     )
   }
   return stateOptions.join("\n")
