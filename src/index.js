@@ -91,12 +91,22 @@ function submitHandler(e) {
 
 
 function postFetch(state_id, cases, date) {
-  const endpoint = `http://localhost:3000/api/v1/states/${state_id}/state_days`
-  const bodyData = { state_id, cases, date }
-  fetch(endpoint, {
+  const myState = State.all.find(el => el.id == state_id )
+  const endpoint1 = `http://localhost:3000/api/v1/states/${myState.id}/state_days`
+  const endpoint2 = `http://localhost:3000/api/v1/states/${myState.id}`
+  const bodyData1 = { state_id: myState.id, cases: cases, date: date }
+  const bodyData2 = { id: myState.id, total_cases: parseInt(myState.total_cases) + parseInt(cases) }
+  debugger
+  fetch(endpoint1, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(bodyData)
+    body: JSON.stringify(bodyData1)
   })
     .then(resp => resp.json())
+  fetch(endpoint2, {
+    method: "PATCH", 
+    headers: {"Content-Type": "application/json"},
+    body: JSON.stringify(bodyData2)
+  })
+  .then(resp => resp.json())
 }
