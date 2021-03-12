@@ -4,21 +4,21 @@ const countiesEndpoint = "http://localhost:3000/api/v1/counties"
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
+    .then(() => addLinkToCountyButtons())
   document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
 })
 
 // Functions to display a state on the homepage
 
 function getStates() {
-  fetch(statesEndpoint)
+  return fetch(statesEndpoint)
     .then( resp => resp.json() )
     .then( json => {
       json.data.forEach(s => {
         let newState = new State(s)
       })
     })
-    .then( () => State.displayStatesView())
-    .then( () => addLinkToCountyButtons() )
+    .then( () => State.displayStatesView() )
 }
 
 // Display detail view of county-by-county breakdown
@@ -34,11 +34,18 @@ function addLinkToCountyButtons() {
 function getCountiesByState(e) {
   fetch(`http://localhost:3000/api/v1/states/${e.target.value}/counties`)
     .then( resp => resp.json() )
-    .then( json => displayCountyView(json) )
+    .then( json => {
+      County.all.length = 0
+      json.data.forEach(c => {
+        let newCounty = new County(c)
+      })
+    })
+    .then( () => County.displayCountiesView() )
 }
 
 function displayCountyView(json) {
   document.querySelector('#app-container').innerHTML = ""
+  County.all.length = 0
   sortJSONObjArrayByName(json)
   json.data.forEach( countyObj => {
     displayCountyCard(countyObj)

@@ -1,6 +1,4 @@
 
-
-
 class State {
 
   static sortStates() {
