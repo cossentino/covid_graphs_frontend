@@ -4,7 +4,7 @@ const countiesEndpoint = "http://localhost:3000/api/v1/counties"
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
-    .then(() => addLinkToCountyButtons())
+    .then(() => addStateCardButtonEvents())
   document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
 })
 
@@ -21,8 +21,9 @@ function getStates() {
     .then( () => State.displayStatesView() )
 }
 
-function addLinkToCountyButtons() {
+function addStateCardButtonEvents() {
   const detailLinks = document.querySelectorAll('.show-state-detail')
+  const figureLinks = document.querySelectorAll('.show-graph')
   for (i of detailLinks ) {
     i.addEventListener('click', e => {
       getCountiesByState(e)
@@ -92,21 +93,24 @@ function submitHandler(e) {
 
 function postFetch(state_id, cases, date) {
   const myState = State.all.find(el => el.id == state_id )
-  const endpoint1 = `http://localhost:3000/api/v1/states/${myState.id}/state_days`
-  const endpoint2 = `http://localhost:3000/api/v1/states/${myState.id}`
   const bodyData1 = { state_id: myState.id, cases: cases, date: date }
   const bodyData2 = { id: myState.id, total_cases: parseInt(myState.total_cases) + parseInt(cases) }
-  debugger
-  fetch(endpoint1, {
+  fetch(`http://localhost:3000/api/v1/states/${myState.id}/state_days`, {
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(bodyData1)
   })
     .then(resp => resp.json())
-  fetch(endpoint2, {
+  fetch(`http://localhost:3000/api/v1/states/${myState.id}`, {
     method: "PATCH", 
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(bodyData2)
   })
   .then(resp => resp.json())
+  .then(() => {
+    myState.total_cases += parseInt(cases)
+    myState.displayOneState()
+  })
+  
 }
+

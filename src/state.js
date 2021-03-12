@@ -14,17 +14,22 @@ class State {
     this.sortStates().forEach(s => s.renderStateCard())
   }
 
-
+  
+  
   constructor(stateObj) {
     this.id = stateObj.id
     this.name = stateObj.attributes.name
-    this.total_cases = stateObj.attributes.total_cases
+    this.total_cases = parseInt(stateObj.attributes.total_cases)
     this.population = stateObj.attributes.population
     this.case_rate = stateObj.attributes.case_rate
     this.counties = stateObj.attributes.counties
     State.all.push(this)
   }
-
+  
+  displayOneState() {
+    document.querySelector('#app-container').innerHTML = ""
+    this.renderStateCard()
+  }
 
   renderStateCard() {
     const div1 = document.createElement('div')
@@ -36,20 +41,24 @@ class State {
 
   stateCardHTML() {
     return `
-      <div class="col s3 m3" style="width:300px">
+      <div class="col s3 m3" style="width:250px">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
             <span class="card-title">${this.name}</span>
             <p>Total Cases: ${this.total_cases}</p>
             <p>Population: ${this.population}</p>
-            <p>Cases as Percent of Population: ${this.case_rate}%</p>
+            <p>Cases as % of Population: ${this.case_rate}%</p>
           </div>
           <div class="card-action">
             <button class="show-state-detail btn" value=${this.id}>County Breakdown!</button>
           </div>
+          <div class="card-action">
+          <button class="show-graph btn" value=${this.id}>See cases over time!</button>
+        </div>
         </div>
       </div>`;
   }
+
 
 }
 
