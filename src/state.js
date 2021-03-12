@@ -4,7 +4,7 @@
 class State {
 
   static sortStates() {
-    myStates = [...State.all]
+    const myStates = [...State.all]
     myStates.sort((a,b) => {
       return a.name.localeCompare(b.name)
     })
@@ -29,7 +29,7 @@ class State {
 
 
   renderStateCard() {
-    div1 = document.createElement('div')
+    const div1 = document.createElement('div')
     div1.style = "width:400px; float:left"
     div1.innerHTML = this.stateCardHTML()
     document.querySelector("#app-container").appendChild(div1)
