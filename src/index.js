@@ -8,7 +8,7 @@ document.addEventListener("DOMContentLoaded", () => {
   document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
 })
 
-// Functions to display a state on the homepage
+// Display states view
 
 function getStates() {
   return fetch(statesEndpoint)
@@ -30,7 +30,7 @@ function addLinkToCountyButtons() {
   }
 }
 
-// Display detail view of county-by-county breakdown
+// Display counties by state
 
 function getCountiesByState(e) {
   fetch(`http://localhost:3000/api/v1/states/${e.target.value}/counties`)
@@ -44,7 +44,7 @@ function getCountiesByState(e) {
     .then( () => County.displayCountiesView() )
 }
 
-// Display Form to add data
+// Display form to add new day of cases
 
 function displayNewDataForm() {
   const myDiv = document.querySelector('#app-container')
@@ -71,13 +71,7 @@ function displayNewDataForm() {
 
 function createStateSelectOptions() {
   const stateOptions = []
-  // const states = await( 
-  //   fetch(statesEndpoint)
-  //   .then( resp => resp.json() )
-  //   .then( json => sortJSONObjArrayByName(json))
-  // )
   const states = State.sortStates()
-  // for ( state of states.data ) {
   for ( state of states ) {
     stateOptions.push(
       `<option value='${state.id}'>${state.name}<option>`
@@ -89,22 +83,20 @@ function createStateSelectOptions() {
 
 function submitHandler(e) {
   e.preventDefault()
-  const stateID = parseInt(document.querySelector('#state-select').value)
-  const caseNumber = document.querySelector('#case-input').value
+  const state_id = parseInt(document.querySelector('#state-select').value)
+  const cases = document.querySelector('#case-input').value
   const date = document.querySelector('#date-input').value
-  postFetch(stateID, caseNumber, date)
+  postFetch(state_id, cases, date)
 }
 
 
-function postFetch(stateID, caseNumber, date) {
-  const endpoint = `http://localhost:3000/api/v1/states/${stateID}/state_days`
-  const bodyData = { state_id: stateID, cases: caseNumber, date: date }
+function postFetch(state_id, cases, date) {
+  const endpoint = `http://localhost:3000/api/v1/states/${state_id}/state_days`
+  const bodyData = { state_id, cases, date }
   fetch(endpoint, {
-    // POST request
     method: "POST",
     headers: {"Content-Type": "application/json"},
     body: JSON.stringify(bodyData)
   })
     .then(resp => resp.json())
-    .then(json => console.log(json))
 }
