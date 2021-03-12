@@ -24,7 +24,6 @@ function displayStatesView(statesJson) {
 
 function displayStateCard(stateObj) {
   div1 = document.createElement('div')
-  // div1.className = "container col s3"
   div1.style = "width:400px; float:left"
   div1.innerHTML = stateCardHTML(stateObj)
   document.querySelector("#app-container").appendChild(div1)
