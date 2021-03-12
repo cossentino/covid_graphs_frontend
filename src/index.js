@@ -23,10 +23,15 @@ function getStates() {
 
 function addStateCardButtonEvents() {
   const detailLinks = document.querySelectorAll('.show-state-detail')
-  const figureLinks = document.querySelectorAll('.show-graph')
+  const graphLinks = document.querySelectorAll('.show-graph')
   for (i of detailLinks ) {
     i.addEventListener('click', e => {
       getCountiesByState(e)
+    })
+  }
+  for (i of graphLinks) {
+    i.addEventListener('click', e => {
+      getStateGraph(e)
     })
   }
 }
@@ -44,6 +49,20 @@ function getCountiesByState(e) {
     })
     .then( () => County.displayCountiesView() )
 }
+
+// Display cases over time
+
+function getStateGraph(e) {
+  fetch(`http://localhost:3000/api/v1/states/${e.target.value}/state_days`)
+    .then( resp => resp.json() )
+    .then( json => console.log(json))
+}
+
+function displayGraphView() {
+  "#"
+}
+
+
 
 // Display form to add new day of cases
 
