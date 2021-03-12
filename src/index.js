@@ -6,7 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getStates()
     .then(() => addStateCardButtonEvents())
   document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
-  document.querySelector('.brand-logo').addEventListener("click", () => State.displayStatesTest())
+  document.querySelector('.brand-logo').addEventListener("click", () => State.displayStatesView())
 })
 
 // Display states view
@@ -79,9 +79,11 @@ function displayNewDataForm() {
       <label for="date-input">Date</label>
       <input type="date" class="form-control" id="date-input">
     </div>
-    <button class="btn" type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
-</form>`
+    <button type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
+    </form>
+    <button class="btn btn-primary return-to-home">Home</button>`
   document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
+  document.querySelector('.return-to-home').addEventListener('click', () => State.displayStatesView())
 }
 
 function createStateSelectOptions() {
@@ -101,30 +103,37 @@ function submitHandler(e) {
   const state_id = parseInt(document.querySelector('#state-select').value)
   const cases = document.querySelector('#case-input').value
   const date = document.querySelector('#date-input').value
-  postFetch(state_id, cases, date)
+  postFetchWrapper(state_id, cases, date)
 }
 
 
-function postFetch(state_id, cases, date) {
+function postFetchWrapper(state_id, cases, date) {
   const myState = State.all.find(el => el.id == state_id )
   const bodyData1 = { state_id: myState.id, cases: cases, date: date }
   const bodyData2 = { id: myState.id, total_cases: parseInt(myState.total_cases) + parseInt(cases) }
-  fetch(`http://localhost:3000/api/v1/states/${myState.id}/state_days`, {
-    method: "POST",
-    headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(bodyData1)
-  })
-    .then(resp => resp.json())
-  fetch(`http://localhost:3000/api/v1/states/${myState.id}`, {
+  addDataDay(myState, bodyData1)
+  updateTotalCases(myState, bodyData2)
+}
+
+function addDataDay(state, body) {
+fetch(`http://localhost:3000/api/v1/states/${state.id}/state_days`, {
+  method: "POST",
+  headers: {"Content-Type": "application/json"},
+  body: JSON.stringify(body)
+})
+  .then(resp => resp.json())
+}
+
+function updateTotalCases(state, body) {
+  fetch(`http://localhost:3000/api/v1/states/${state.id}`, {
     method: "PATCH", 
     headers: {"Content-Type": "application/json"},
-    body: JSON.stringify(bodyData2)
+    body: JSON.stringify(body)
   })
   .then(resp => resp.json())
   .then(() => {
-    myState.total_cases += parseInt(cases)
-    myState.displayOneState()
+    state.total_cases += parseInt(document.querySelector('#case-input').value)
+    state.displayOneState()
   })
-  
 }
 

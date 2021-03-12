@@ -35,13 +35,14 @@ class County {
 
   countyCardHTML() {
     return `
-      <div class="col s3 m3" style="width:300px">
+      <div class="col s3 m3" style="width:250px; height: 250px">
         <div class="card blue-grey darken-1">
           <div class="card-content white-text">
             <span class="card-title">${this.name}</span>
             <p>Total Cases: ${this.total_cases}</p>
             <p>Population: ${this.population}</p>
-            <p>Cases as Percent of Population: ${this.case_rate}%</p>
+            <p>Cases as % of Population: ${this.case_rate}%</p>
+            <p>Current as of 2021-03-08</p>
           </div>
         </div>
       </div>`;

@@ -12,12 +12,7 @@ class State {
   static displayStatesView() {
     document.querySelector('#app-container').innerHTML = ""
     this.sortStates().forEach(s => s.renderStateCard())
-  }
-
-  static displayStatesTest() {
-    document.querySelector('#app-container').innerHTML = ""
-    const myStates = State.all.slice(0,5)
-    myStates.forEach(s => s.renderStateCard())
+    addStateCardButtonEvents()
   }
 
   constructor(stateObj) {
@@ -53,7 +48,7 @@ class State {
             <p>Total Cases: ${this.total_cases}</p>
             <p>Population: ${this.population}</p>
             <p>Cases as % of Population: ${this.case_rate}%</p>
-            <p>Current as of ${this.state_days.pop().date}</p>
+            <p>Most recent entry: ${this.state_days[this.state_days.length - 1].date}</p>
           </div>
           <div class="card-action">
             <button class="show-state-detail btn" value=${this.id}>County Breakdown!</button>
