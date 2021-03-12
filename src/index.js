@@ -6,6 +6,7 @@ document.addEventListener("DOMContentLoaded", () => {
   getStates()
     .then(() => addStateCardButtonEvents())
   document.querySelector('#add-data-button').addEventListener("click", () => displayNewDataForm())
+  document.querySelector('.brand-logo').addEventListener("click", () => State.displayStatesTest())
 })
 
 // Display states view
@@ -50,7 +51,7 @@ function getCountiesByState(e) {
     .then( () => County.displayCountiesView() )
 }
 
-// Display cases over time
+// Graph view
 
 function getStateGraph(e) {
   const myState = State.all.find(el => el.id == e.target.value)
@@ -58,10 +59,7 @@ function getStateGraph(e) {
 }
 
 
-
-
-
-// Display form to add new day of cases
+// New cases form
 
 function displayNewDataForm() {
   const myDiv = document.querySelector('#app-container')
