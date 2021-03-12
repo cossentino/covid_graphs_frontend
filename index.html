@@ -13,32 +13,27 @@
   <script type="text/javascript" src="src/county.js"></script>
   <script type="text/javascript" src="src/state.js"></script>
   <script type="text/javascript" src="src/index.js"></script>
-  <style>
-    #footer {
-   position:fixed;
-   left:0px;
-   bottom:0px;
-   height:50px;
-   width:100%;
-   background:#999;
-  }
-  </style>
+  <style>  </style>
 </head>
 <body>
   <nav>
     <div class="nav-wrapper" style="background:#999">
       <div class="container">
-      <a href="index.html" class="brand-logo">Covid-19 Data Trends</a>
+      <a href="#" class="brand-logo">Covid-19 Data Trends</a>
       <ul id="nav-mobile" class="right hide-on-med-and-down">
         <li><button id="add-data-button" class="btn">Add Data</button></li>
       </ul>
     </div>
     </div>
   </nav>
-  <div class="container" id="app-container">
-  </div>
-  <div id="footer">
+  <div id="welcome-paragraph" class="container">
+    <h3>Welcome!</h3>
+    <p>This tool allows you to view state-level data about COVID-19 cases in the US. Right now, 
+      our data is current as of March 8, 2021. Click on a state to view total cases on a county level, or to
+      view a graph of statewide cases since the beginning of the pandemic. Thank you and we hope you find this tool useful.
+    </p>
     <p>COVID-19 <a href="https://github.com/nytimes/covid-19-data">data</a> courtesy of New York Times&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;Population <a href="https://www.census.gov/programs-surveys/popest/data/data-sets.html">data</a> courtesy of US Census Bureau</p>
   </div>
+  <div class="container" id="app-container"></div>
 </body>
 </html>
