@@ -29,6 +29,7 @@ class State {
   displayOneState() {
     document.querySelector('#app-container').innerHTML = ""
     this.renderStateCard()
+    addStateCardButtonEvents()
   }
 
   renderStateCard() {
