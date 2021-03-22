@@ -79,9 +79,11 @@ function displayNewDataForm() {
       <label for="date-input">Date</label>
       <input type="date" class="form-control" id="date-input">
     </div>
-    <button type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
-    </form>
-    <button class="btn btn-primary return-to-home">Home</button>`
+    <div class="row">
+      <button type="submit" id="add-data-submit" class="btn btn-primary">Submit</button>
+      <button class="btn btn-primary return-to-home">Home</button>
+    </div>
+    </form>`
   document.querySelector('#add-state-data-form').addEventListener('submit', e => submitHandler(e))
   document.querySelector('.return-to-home').addEventListener('click', () => State.displayStatesView())
 }

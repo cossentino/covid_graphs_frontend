@@ -52,10 +52,10 @@ class State {
             <p>Most recent entry: ${this.state_days[this.state_days.length - 1].date}</p>
           </div>
           <div class="card-action">
-            <button class="show-state-detail btn" value=${this.id}>County Breakdown!</button>
+            <button class="show-state-detail btn" value=${this.id}>County Breakdown</button>
           </div>
           <div class="card-action">
-          <button class="show-graph btn" value=${this.id}>See cases over time!</button>
+          <button class="show-graph btn" value=${this.id}>Cases over time</button>
         </div>
         </div>
       </div>`;
