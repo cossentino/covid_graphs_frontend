@@ -90,3 +90,14 @@ function createStateSelectOptions() {
 }
 
 
+function renderHomeButton() {
+  const div1 = document.createElement('div')
+  const button = document.createElement('button')
+  div1.className = "row"
+  button.className = "btn btn-primary return-to-home"
+  button.innerText = "Return Home"
+  button.style.margin = 'auto'
+  button.addEventListener('click', () => State.displayStatesView())
+  div1.appendChild(button)
+  document.querySelector('#app-container').appendChild(div1)
+}

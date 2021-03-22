@@ -12,7 +12,7 @@ class County {
 
   static displayCountiesView() {
     document.querySelector('#app-container').innerHTML = ""
-    this.renderHomeButton()
+    renderHomeButton()
     this.sortCounties().forEach(c => c.renderCountyCard())
   }
 
@@ -33,18 +33,7 @@ class County {
     document.querySelector("#app-container").appendChild(div1)
   }
 
-  static renderHomeButton() {
-    const div1 = document.createElement('div')
-    const button = document.createElement('button')
-    div1.className = "row"
-    button.className = "btn btn-primary return-to-home"
-    button.innerText = "Return Home"
-    button.style.marginLeft = '36%'
-    button.style.marginRight = '36%'
-    button.addEventListener('click', () => State.displayStatesView())
-    div1.appendChild(button)
-    document.querySelector('#app-container').appendChild(div1)
-  }
+
 
 
   countyCardHTML() {

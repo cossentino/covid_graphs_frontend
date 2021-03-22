@@ -67,6 +67,7 @@ class State {
 
     displayGraphView() {
       document.querySelector('#app-container').innerHTML = ""
+      renderHomeButton()
       this.createGraph()
     }
 
