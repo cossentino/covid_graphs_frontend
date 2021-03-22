@@ -11,7 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
 // Display states view
 
+function loadScreen() {
+  const div1 = document.createElement('div')
+  const h2 = document.createElement('h2')
+  h2.innerText = 'Loading . . . (this may take about ten seconds)'
+  div1.appendChild(h2)
+  document.querySelector('#app-container').appendChild(div1)
+}
+
 function getStates() {
+  loadScreen()
   return fetch(statesEndpoint)
     .then( resp => resp.json() )
     .then( json => {
