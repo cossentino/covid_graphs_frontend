@@ -124,6 +124,9 @@ fetch(`http://localhost:3000/api/v1/states/${state.id}/state_days`, {
   body: JSON.stringify(body)
 })
   .then(resp => resp.json())
+  .then(() => {
+    state.state_days.push(body)
+  })
 }
 
 function updateTotalCases(state, body) {
