@@ -1,6 +1,5 @@
 const statesEndpoint = "http://localhost:3000/api/v1/states"
-const countiesEndpoint = "http://localhost:3000/api/v1/counties"
-
+ 
 
 document.addEventListener("DOMContentLoaded", () => {
   getStates()
@@ -29,6 +28,7 @@ function getStates() {
       })
     })
     .then( () => State.displayStatesView() )
+    .catch(error => errorHandler(error))
 }
 
 function addStateCardButtonEvents() {
@@ -58,6 +58,7 @@ function getCountiesByState(e) {
       })
     })
     .then( () => County.displayCountiesView() )
+    .catch(error => errorHandler(error))
 }
 
 // Graph view
@@ -89,6 +90,7 @@ function createStateSelectOptions() {
   return stateOptions.join("\n")
 }
 
+// Buttons/functionality used throughout app
 
 function renderHomeButton() {
   const div1 = document.createElement('div')
@@ -100,4 +102,10 @@ function renderHomeButton() {
   button.addEventListener('click', () => State.displayStatesView())
   div1.appendChild(button)
   document.querySelector('#app-container').appendChild(div1)
+}
+
+
+function errorHandler(error) {
+  alert(error.message)
+  document.querySelector('#app-container').innerHTML = "<h2>We're experiencing technical difficulties. Please try again at a later time.</h2>"
 }

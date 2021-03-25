@@ -52,6 +52,7 @@ class Form {
     .then(() => {
       state.state_days.push(body)
     })
+    .catch(error => errorHandler(error))
   }
   
  updateTotalCases(state, body) {
